@@ -93,40 +93,18 @@ public class MainActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
 //            connectToServer(IP, Integer.parseInt(port));
-            new connectThread().execute(IP, Integer.parseInt(port));
             Log.d(TAG, "attemptLogin: " + IP);
             Log.d(TAG, "attemptLogin: " + port);
+            Intent i = new Intent(MainActivity.this, LocationService.class);
+            i.putExtra("Name", name);
+            i.putExtra("IP", IP);
+            i.putExtra("Port", port);
+            startService(i);
             Snackbar mSuccessSnackbar = Snackbar.make(findViewById(R.id.constraintLayout), R.string.snackbarSuccess, Snackbar.LENGTH_SHORT);
             mSuccessSnackbar.show();
 
         }
 
-    }
-
-    class connectThread extends AsyncTask<Object, Void, Void> {
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            startService(new Intent(MainActivity.this, LocationService.class));
-            super.onPostExecute(aVoid);
-        }
-
-        @Override
-        protected Void doInBackground(Object... param) {
-            try {
-                Socket server = new Socket((String) param[0], (int) param[1]);
-                Log.d(TAG, "connectToServer: " + server.toString());
-                Log.d(TAG, "connectToServer: " + server.getRemoteSocketAddress());
-                OutputStream outToServer = server.getOutputStream();
-                DataOutputStream out = new DataOutputStream(outToServer);
-                out.writeUTF("Hey Mac" + server.getLocalSocketAddress());
-                InputStream inFromServer = server.getInputStream();
-            } catch (Exception e) {
-                e.printStackTrace();
-
-            }
-
-            return null;
-        }
     }
 }
 
