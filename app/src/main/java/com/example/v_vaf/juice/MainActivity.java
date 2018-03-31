@@ -2,23 +2,14 @@ package com.example.v_vaf.juice;
 
 import android.Manifest;
 import android.content.Intent;
-import android.location.LocationListener;
-import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+
+        getSupportActionBar().hide();
 
 
         Button mConnectBtn = findViewById(R.id.connectBtn);
@@ -80,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
         }
         //Check for valid name
         if (TextUtils.isEmpty(name)) {
-//            mNameEdit.setError(getString(R.string.requiredText));
-//            focusView = mNameEdit;
-//            cancel = true;
+            mNameEdit.setError(getString(R.string.requiredText));
+            focusView = mNameEdit;
+            cancel = true;
 
         }
         if (cancel) {
@@ -92,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-//            connectToServer(IP, Integer.parseInt(port));
             Log.d(TAG, "attemptLogin: " + IP);
             Log.d(TAG, "attemptLogin: " + port);
             Intent i = new Intent(MainActivity.this, LocationService.class);
@@ -100,8 +93,6 @@ public class MainActivity extends AppCompatActivity {
             i.putExtra("IP", IP);
             i.putExtra("Port", port);
             startService(i);
-            Snackbar mSuccessSnackbar = Snackbar.make(findViewById(R.id.constraintLayout), R.string.snackbarSuccess, Snackbar.LENGTH_SHORT);
-            mSuccessSnackbar.show();
 
         }
 

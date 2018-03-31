@@ -5,7 +5,8 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.v_vaf.juice.MainActivity">
+    tools:context="com.example.v_vaf.juice.MainActivity"
+    >
 
     <TextView
         android:id="@+id/welcomeText"
@@ -20,18 +21,22 @@
 
     <EditText
         android:id="@+id/nameEdit"
-        android:layout_width="wrap_content"
+        android:layout_width="237dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="19dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center_horizontal"
         android:hint="@string/name"
         app:layout_constraintBottom_toTopOf="@+id/ipEdit"
-        app:layout_constraintStart_toStartOf="@+id/ipEdit" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/ipEdit"
-        android:layout_width="wrap_content"
+        android:layout_width="235dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="188dp"
+        android:gravity="center_horizontal"
         android:hint="@string/ip_address"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,12 +45,15 @@
 
     <EditText
         android:id="@+id/portEdit"
-        android:layout_width="wrap_content"
+        android:layout_width="235dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center_horizontal"
         android:hint="@string/port"
         android:inputType="numberDecimal"
-        app:layout_constraintStart_toStartOf="@+id/ipEdit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ipEdit" />
 
 
@@ -53,9 +61,13 @@
         android:id="@+id/connectBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/black"
+        android:textColor="@color/white"
         android:text="@string/connect"
-        app:layout_constraintStart_toStartOf="@+id/ipEdit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/portEdit" />
 </android.support.constraint.ConstraintLayout>

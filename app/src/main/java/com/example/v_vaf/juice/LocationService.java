@@ -11,16 +11,15 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.DataOutputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
@@ -32,6 +31,7 @@ public class LocationService extends Service {
     String ip;
     int port;
     String name;
+    Socket server;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -39,6 +39,9 @@ public class LocationService extends Service {
         ip = (String) extras.get("IP");
         name = (String) extras.get("Name");
         port = Integer.parseInt((String) extras.get("Port"));
+
+        new connectThread().execute(ip, port);
+
         return super.onStartCommand(intent, flags, startId);
 
     }
@@ -47,7 +50,6 @@ public class LocationService extends Service {
 
     public void onCreate() {
         super.onCreate();
-
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -66,7 +68,7 @@ public class LocationService extends Service {
                 for (Location location : locationResult.getLocations()) {
                     Log.d(TAG, "onLocationResult Long: " + location.getLongitude());
                     Log.d(TAG, "onLocationResult Lat: " + location.getLatitude());
-                    new connectThread().execute(ip, port, location.getLatitude(), location.getLongitude(), name);
+                    new sendDataThread().execute(ip, port, location.getLatitude(), location.getLongitude(), name);
                 }
             }
         };
@@ -80,7 +82,7 @@ public class LocationService extends Service {
         return null;
     }
 
-    static class connectThread extends AsyncTask<Object, Void, Void> {
+    class sendDataThread extends AsyncTask<Object, Void, Void> {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
@@ -89,19 +91,34 @@ public class LocationService extends Service {
         @Override
         protected Void doInBackground(Object... param) {
             try {
-                Log.d(TAG, "doInBackground: " + param[4]);
-                Socket server = new Socket((String) param[0], (int) param[1]);
-                Log.d(TAG, "connectToServer: " + server.toString());
-                Log.d(TAG, "connectToServer: " + server.getRemoteSocketAddress());
                 OutputStream outToServer = server.getOutputStream();
                 DataOutputStream out = new DataOutputStream(outToServer);
                 out.writeBytes(param[4] + "_" + param[2] + "_" + param[3] + "_");
-                InputStream inFromServer = server.getInputStream();
             } catch (Exception e) {
                 e.printStackTrace();
 
             }
 
+            return null;
+        }
+    }
+
+    class connectThread extends AsyncTask<Object, Void, Object> {
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected Object doInBackground(Object... objects) {
+            try {
+                server = new Socket((String) objects[0], (int) objects[1]);
+                Log.d(TAG, "connectToServer: " + server.getRemoteSocketAddress());
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
             return null;
         }
     }

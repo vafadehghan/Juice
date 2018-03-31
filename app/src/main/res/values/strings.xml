@@ -3,7 +3,7 @@
     <string name="ip_address">IP Address</string>
     <string name="port">Port</string>
     <string name="connect">Connect</string>
-    <string name="welcome_to_juiice">Welcome to Juiice</string>
+    <string name="welcome_to_juiice">COMP 4981 - CREEPER APP</string>
     <string name="name">Name</string>
     <string name="requiredText">This Field is Required</string>
     <string name="snackbarSuccess">You are now dripping in sauce</string>
