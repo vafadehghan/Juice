@@ -63,6 +63,27 @@ public class LocationService extends Service {
     LocationCallback mLocationCallback;
 
 
+    /**
+     * ------------------------------------------------------------------------------------------------------------------
+     * -- FUNCTION:	onDestroy
+     * --
+     * -- DATE:		April 1,2018
+     * --
+     * --
+     * -- DESIGNER:	    Vafa Dehghan Saei
+     * --
+     * -- PROGRAMMER:   Vafa Dehghan Saei
+     * --
+     * -- INTERFACE:	public void onDestroy()
+     * --
+     * --
+     * --
+     * -- RETURNS:		N/A
+     * --
+     * -- NOTES:		This function is called automatically when the service is destroyed. The method will destroy the socket and stop location updates.
+     * --
+     * ----------------------------------------------------------------------------------------------------------------------
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -150,7 +171,7 @@ public class LocationService extends Service {
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(5000);
-        
+
         mLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -167,7 +188,6 @@ public class LocationService extends Service {
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
 
     }
-
 
 
     /**
