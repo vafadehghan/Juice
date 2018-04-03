@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**------------------------------------------------------------------------------------------------------------------
  -- SOURCE FILE:	MainActivity.java - The main entry point of the program.
@@ -67,12 +68,21 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
+        Button mDisconnectBtn = findViewById(R.id.disconnectBtn);
         Button mConnectBtn = findViewById(R.id.connectBtn);
         mNameEdit = findViewById(R.id.nameEdit);
         mIPAddressEdit = findViewById(R.id.ipEdit);
         mPortEdit = findViewById(R.id.portEdit);
 
 
+        mDisconnectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Log.d(TAG, "onClick: DISCONNECT");
+                Toast.makeText(MainActivity.this, "Service Destroyed", Toast.LENGTH_SHORT).show();
+                stopService(new Intent(MainActivity.this, LocationService.class));
+            }
+        });
         mConnectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            Log.d(TAG, "attemptLogin: " + IP);
-            Log.d(TAG, "attemptLogin: " + port);
+//            Log.d(TAG, "attemptLogin: " + IP);
+//            Log.d(TAG, "attemptLogin: " + port);
             Intent i = new Intent(MainActivity.this, LocationService.class);
             i.putExtra("Name", name);
             i.putExtra("IP", IP);

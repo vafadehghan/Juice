@@ -3,6 +3,7 @@
     <string name="ip_address">IP Address</string>
     <string name="port">Port</string>
     <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
     <string name="app_introduction">COMP 4981 - Friend Locator</string>
     <string name="name">Name</string>
     <string name="requiredText">This Field is Required</string>
